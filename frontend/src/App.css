@@ -1,0 +1,682 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* --------------------------------- */
+
+
+.Home{
+  margin-left: 40px; 
+  margin-right: 40px;
+}
+
+
+/* nav{
+  height: 72px;
+} */
+
+
+
+.navbar-brand{
+  margin-right: 36px;
+}
+
+.form-control{
+  width: 400px;
+  height: 45px;
+}
+
+.nav-item{
+  margin: 0 15px;
+  color: black;
+}
+
+.Download_link{
+  margin-left: 45px;
+}
+
+.dropdown-menu{
+  padding: 50px;
+}
+
+.str_line_1{
+  background-color:rgb(206, 206, 222);
+  width: 1425px;
+  height: 1px;
+  margin-left: -47px;
+  /* margin-right: -47px; */
+}
+
+
+.Signup_nav{
+  margin: 0px 56px;
+  height: 73px;
+}
+
+.line_{
+  background-color: rgb(206, 206, 222);
+}
+
+.Signup_page{
+  background-image:linear-gradient(rgb(253, 233, 242) 0%, rgb(253, 240, 232) 100%, rgb(253, 240, 232) 100%);
+}
+
+.Signup_page{
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+  display: flex;
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.Signup_Content{
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+}
+
+.Signup_Content img{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.Signup_profile{
+  margin-top: 30px;
+  padding: 0px 48px;
+  height: 431px;
+}
+
+.Signup_profile h5{
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 40px;
+}
+
+.Signup__{
+  /* display: flex;
+  align-items: flex-end;
+  margin-top: 26px; */
+
+}
+
+.inputs_{
+  margin-top: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #dfdddd;
+  padding-left: 15px;
+  border-radius: 2px;
+}
+
+.inputs_ input{
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 6px;
+  /* padding-left: 10px; */
+ 
+}
+
+.frgt-pass{
+  cursor: pointer;
+  color: rgb(159, 32, 137);
+  font-weight: 600;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.Continue-btn button{
+
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(159, 32, 137);
+  border-radius: 4px;
+  width: 320px;
+  height: 42px;
+  font-weight: 500;
+  font-size: 18px;
+  margin-left: 12px;
+  margin-top: 20px;
+}
+
+
+.Signup_btn{
+  /* justify-content: center; */
+  display: flex;
+  align-items: center;
+  /* background-color: rgb(159, 32, 137); */
+  /* border-radius: 4px; */
+  margin-top: 20px;
+}
+
+.submit{
+  color: black;
+  margin-bottom: 0;
+  padding: 5px 20px;
+  background-color: rgb(223, 221, 221);
+  /* background-color: rgb(159, 32, 137); */
+  border-radius: 4px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+
+.gray{
+
+  background: rgb(159, 32, 137);
+  /* color: #676767; */
+  color: rgb(255, 255, 255);
+  
+}
+
+.Signup_terms{
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(139, 139, 163);
+  justify-content: center;
+  display: flex;
+  
+}
+
+.Signup_terms p{
+  margin-bottom: 26px;
+}
+
+.Signup_terms span{
+  color: rgb(159, 32, 137);
+}
+
+/* Navbar1 */
+
+.dropdown-menu{
+  padding: 20px;
+}
+
+.navv-item{
+  padding-bottom: 8px;
+  
+}
+
+.navv-item button{
+  border: none;
+  width: 120px;
+  height: 35px;
+  background-color: rgb(159, 32, 137);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.dropdown-item{
+  padding: 0;
+}
+
+
+
+
+.Banner1{
+  margin-top: 60px;
+  background-color: rgb(248, 248, 255);
+  margin-bottom: 60px;
+  /* display: block; */ 
+  box-sizing: border-box;
+  margin-left: 110px;
+  margin-right: 110px;
+}
+
+.Banner1 h1{
+  position: absolute;
+  color: rgb(53, 53, 67);
+  font-size: 48px;
+  font-weight: 700;
+  left: 210px;
+  top: 210px;
+}
+
+
+.Banner-img img{
+  margin-left: 600px;
+  /* display: flex; */
+  /* position: absolute;
+  top: 200px; */
+}
+
+.Banner-options{
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding-top: 10px;
+  padding-right: 10px;
+  top: 350px;
+  left: 100px;
+  display: flex;
+  /* justify-content: space-between; */
+  margin-left: 100px;
+}
+
+.Banner-option2{
+  border-left-color:rgb(97, 97, 115)
+/* border-left-width0.666667px */
+}
+
+.Banner-options img{
+  margin-right: 5px;
+}
+
+.download-link{
+  display: flex;
+  background-color: rgb(159, 32, 137);
+  position: absolute;
+  top: 430px;
+  cursor: pointer;
+  padding-left: 30px;
+  padding-right: 35px;
+  padding-top: 10px;
+  border-radius: 4px;
+  left: 200px;
+
+}
+
+.download-link p{
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding-left: 16px;
+  /* text-decoration: none; */
+
+}
+
+
+.Banner-options img{
+  /* padding-left: 10px;   */
+  margin-left: 10px;
+  border: 1px solid rgb(208, 206, 206);
+  border-radius: 50%;
+}
+
+
+.top-categories{
+  display: flex;
+  margin-left: 65px;
+}
+
+.strt-line{
+  background-color: rgb(217, 166, 208);
+  background-image: none;
+  background-origin: padding-box;
+  height: 1px;
+  width: 244px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.Banner2{
+  /* align-items: center; */
+  background-image: url(https://images.meesho.com/images/marketing/1726468570178_1200.webp);
+  background-size: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: block;
+  /* padding: 100px; */
+  margin-top: 70px;
+  margin-bottom: 60px;
+  margin-left: 110px;
+  margin-right: 110px;
+  padding: 90px 24px 29px 24px;
+
+}
+.Banner2 img{
+  padding: 10px;
+  cursor: pointer;
+
+}
+
+.Banner3{
+  background-image: url(https://images.meesho.com/images/marketing/1726468630909_1200.webp);
+  background-size: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  padding: 100px;
+  margin-bottom: 60px;
+  /* background-attachment: scroll; */
+  padding: 80px 55px 35px 24px;
+  margin-left: 110px;
+  margin-right: 110px;
+
+
+}
+
+.Banner3 img{
+  cursor: pointer;
+}
+
+.view-all1{
+  /* position: absolute;
+  left: 200px;
+  top: 1800px; */
+  margin-top: 160px;
+  margin-left: 85px;
+  cursor: pointer;
+}
+
+.B3-Homedecor{
+  margin-left: 120px;
+  
+
+}
+
+
+.Banner4{
+  background-image: url(https://images.meesho.com/images/marketing/1726468665881_1200.webp);
+  background-size: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  /* display: block; */
+  padding: 80px 55px 35px 24px;
+  margin-bottom: 60px;
+  margin-left: 110px;
+  margin-right: 110px;
+  display: flex;
+}
+
+.Banner4 img{
+  cursor: pointer;
+}
+
+.view-all2{
+  /* position: absolute;
+  left: 200px;
+  top: 2000px; */
+  margin-top: 170px;
+  margin-left: 85px;
+  cursor: pointer;
+}
+
+.B4-Accessories{
+  margin-left: 120px;
+}
+
+.Banner5{
+  margin-left: 110px;
+  margin-right: 110px;
+  border-radius: 5px;
+  /* display: block; */
+  margin-bottom: 60px;
+}
+
+.Banner5 img{
+  border-radius: 5px;
+}
+
+.Banner5-options{
+  position: absolute;
+  top: 2530px;
+  left: 620px;
+}
+
+.Banner5-1{
+  color: rgb(85, 133, 248);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding-left: 245px;
+}
+
+.Banner5-2{
+  color: rgb(159, 32, 137);
+  font-size: 48px;
+  /* font-weight: 700; */
+  letter-spacing: 0.5px;
+}
+
+.Banner5-3{
+  color: rgb(159, 32, 137);
+  font-size: 48px;
+  /* font-weight: 700; */
+  letter-spacing: 0.5px;
+  padding-left: 112px;
+
+  
+}
+
+.Banner5-img1{
+  border-radius: 4px;
+  width: 180px;
+  height: 48px;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  top: 2740px;
+  left: 815px;
+  padding: 6px 25px;
+}
+
+.Banner5-img2{
+  border-radius: 4px;
+  width: 180px;
+  height: 48px;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  top: 2740px;
+  left: 1005px;
+  padding: 6px 25px;
+ 
+
+}
+
+.Banner6{
+  margin-left: 110px;
+  margin-right: 110px;
+  border-radius: 5px;
+  background-image: url(https://images.meesho.com/images/pow/supplyBannerDesktop_1106.webp);
+  height: 290px;
+  width: 1100px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 60px;
+
+}
+
+.content{
+  padding: 40px 60px;
+}
+
+.Banner6-ticks{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 300px;
+}
+
+.Banner6-signup{
+  background-color: rgb(255, 255, 255);
+  color: rgb(159, 32, 137);
+  height: 68px;
+  width: 168px;
+  padding: 10px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+
+/* .card{
+  display: flex;
+} */
+
+.card-img-top{
+  height: 222.30px;
+  width: 222.30px;
+  object-fit: contain;
+}
+
+.card-text{
+  background-color: rgb(248, 248, 255);
+  color:  rgb(97, 97, 115);
+  font-weight: 600;
+  box-sizing: border-box;
+  border-radius: 48px;
+  /* padding: 5px; */
+  padding-left: 10px;
+  margin-right: 95px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 12px;
+  line-height: 16px;
+}
+.Price{
+  color: black;
+}
+
+.card-title{
+  font-size: 16px;
+  color: rgb(139, 139, 163);
+}
+
+.card-body s{
+  color: rgb(139, 139, 163);
+  font-size: 16px;
+  
+}
+
+.catogory-btns{
+  color: #61dafb;
+}
+
+.catogory-btns button{
+  color: #fff;
+  background-color: rgb(159, 32, 137);
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+  height: 45px;
+}
+
+.str_line_4{
+  background-color:rgb(206, 206, 222);
+  width: 340px;
+  height: 1px;
+  margin-left: -30px;
+  /* margin-right: -47px; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+.ratings{
+  display: flex;
+  background-color: rgb(3, 141, 99);
+  margin-right: 130px;
+  border-radius: 16px;
+  padding-top: 4px;
+  
+}
+
+.ratings h4{
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  padding-left: 10px;
+}
+
+.reviews{
+  margin-left: 18px;
+  font-size: 14px;
+  margin-top: 3px;
+  color: rgb(139, 139, 163);
+
+}
+
+.empty-cart{
+  
+  margin-left: 550px;
+  margin-top: 150px;
+}
+
+.empty-cart img{
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.empty-cart h1{
+  margin-left: 15px;
+}
+
+.empty-cart p{
+  margin-left: -15px;
+}
+
+.empty-cart button{
+  border: none;
+  margin-left: 20px;
+  background-color: rgb(159, 32, 137);
+  color: #fff;
+  border-radius: 4px;
+  height: 40px;
+  width: 300px;
+  font-weight: 500;
+}
+
+.cart-nav{
+  margin-left: 50px;
+  
+}
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(248, 248, 255);
+  margin-top: 60px;
+  margin-left: -47px;
+  margin-right: -47px;
+  padding-top: 60px;
+  padding-left: 47px;
+  padding-right: 47px;
+}
+
+.division-4 img{
+  
+ margin-right: 16px;
+}
+

@@ -10,13 +10,15 @@ export const removeFromCart = (item) =>({
 });
 
 
-export const incrementCartCounter = () =>({
-    type :'INCREMENT_CART_COUNTER'
+export const incrementCartCounter = (id) =>({
+    type :'INCREMENT_CART_COUNTER',
+    payload: id
 });
 
 
-export const decrementCartCounter = () =>({
+export const decrementCartCounter = (id) =>({
     type :'DECREMENT_CART_COUNTER',
+    payload: id
    
 });
 

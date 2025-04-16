@@ -13,7 +13,7 @@ let Details = () =>{
     return(
         <div>
 
-        <div className="container-fluid">
+        <div className="Details">
             <Navbar1/>
             <Navbar2/>
 

@@ -12,7 +12,7 @@ import BecomeaSupplier from './pages/BecomeaSupplier';
 import WomenWestern from './pages/WomenWestern';
 import Details from './pages/Details'
 import Cart from './pages/Cart';
-import ProductDetails from './components/ProductDetails';
+// import ProductDetails from './components/ProductDetails';
 
 function App() {
   
@@ -29,9 +29,9 @@ function App() {
         <Route path='/beauty' element={<Beauty/>} />
         <Route path='/jewellery' element={<Jewellery/>} />
 
-        <Route path='/details' element={<Details/>} >
-          <Route path=':productId'element={<Details/>}/>
-          </Route>
+        <Route path='/details/:id' element={<Details/>} />
+
+          
         <Route path='/Cart' element={<Cart/>} />
       
         <Route path='/electronics' element={<Electronics/>} />

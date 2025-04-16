@@ -1,66 +1,119 @@
-const initialState = {
-    cartItems: [],
-    cartCounter:0 ,
-    totalPrice: 0,
-    deliverCharges: 50,
-    taxes: 0,
-    grandTotal: 0
-};
 
+const savedCartState = JSON.parse(localStorage.getItem('cartState'));
+
+const initialState = savedCartState || {
+  cartItems: [],
+  cartCounter: 0,
+  totalPrice: 0,
+  deliverCharges: 50,
+  taxes: 0,
+  grandTotal: 0,
+};
 
 const cartReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'ADD_TO_CART':
-            const exisitingItemIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
-            if (exisitingItemIndex !== -1) {
-                const updatedCartItems = state.cartItems.map((item, index)=>{
-                    if (index === exisitingItemIndex) {
-                        return {
-                                ...item, quantity: item.quantity + 1, total_item_price: (item.quantity+1) * item.price };
-                              }
-                              return item;
-                });
+  switch (action.type) {
+    case 'ADD_TO_CART': {
+      const existIndex = state.cartItems.findIndex(item => item.id === action.payload.id);
 
-                return {
-                    ...state,
-                    cartItems: updatedCartItems,
-                    cartCounter: state.cartCounter + 1,
-                    totalPrice: state.totalPrice + action.payload.price,
-                    taxes: (state.totalPrice + action.payload.price) * 0.18,
-                    grandTotal: state.totalPrice + state.taxes + action.payload.price
+      if (existIndex !== -1) {
+        const updatedCartItems = state.cartItems.map((item, index) => {
+          if (index === existIndex) {
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+              total_item_price: (item.quantity + 1) * item.price,
+            };
+          }
+          return item;
+        });
 
-                };
-                
-            } else {
-                return{
-                    ...state,
-                    cartItems: [...state.cartItems, {...action.payload, quantity: 1, total_item_price:action.payload.price}],
-                    cartCounter: state.cartCounter + 1,
-                    totalPrice: state.totalPrice + action.payload.price,
-                    taxes: (state.totalPrice + action.payload.price) * 0.18,
-                    grandTotal: state.totalPrice + state.taxes + action.payload.price
-                };
-            }
+        const updatedState = {
+          ...state,
+          cartItems: updatedCartItems,
+          cartCounter: state.cartCounter + 1,
+          totalPrice: state.totalPrice + action.payload.price,
+          taxes: (state.totalPrice + action.payload.price) * 0.18,
+          grandTotal: state.totalPrice + state.taxes + action.payload.price,
+        };
 
-            case 'REMOVE_FROM_CART':
-                const updatedCartItems = state.cartItems.filter(item => item.id !== action.payload.id);
-                const removedItem = state.cartItems.find(item => item.id === action.payload);
+        localStorage.setItem('cartState', JSON.stringify(updatedState));
+        return updatedState;
+      } else {
+        const updatedState = {
+          ...state,
+          cartItems: [
+            ...state.cartItems,
+            { ...action.payload, quantity: 1, total_item_price: action.payload.price },
+          ],
+          cartCounter: state.cartCounter + 1,
+          totalPrice: state.totalPrice + action.payload.price,
+          taxes: (state.totalPrice + action.payload.price) * 0.18,
+          grandTotal: state.totalPrice + state.taxes + action.payload.price,
+        };
 
-                return{
-
-                    ...state,
-                    cartItems: updatedCartItems,
-                    cartCounter: state.cartCounter - removedItem.quantity,
-                    totalPrice: state.totalPrice - (removedItem.price * removedItem.quantity),
-                    taxes: (state.totalPrice + action.payload.price) * 0.18,
-                    grandTotal: state.totalPrice + state.taxes + action.payload.price
-                };
-
-                default:
-                    return state;
-
+        localStorage.setItem('cartState', JSON.stringify(updatedState));
+        return updatedState;
+      }
     }
-};
 
+
+    default:
+      return state;
+  
+
+  case 'INCREMENT_CART_COUNTER':{
+    const updatedCartItems = state.cartItems.map(item => {
+        if (item.id === action.payload) {
+            const newQty = item.quantity + 1;
+            return {
+                ...item,
+                quantity: newQty,
+                total_item_price: newQty * item.price
+            };
+        }
+        return item;
+    });
+    const newTotalPrice = updatedCartItems.reduce((acc, item) => acc + item.total_item_price, 0);
+    const newTaxes = newTotalPrice * 0.18;
+    const newGrandTotal = newTotalPrice + newTaxes + state.deliverCharges;
+
+    return {
+        ...state,
+        cartItems: updatedCartItems,
+        totalPrice: newTotalPrice,
+        taxes: newTaxes,
+        grandTotal: newGrandTotal,
+    };
+}
+
+        case 'DECREMENT_CART_COUNTER': {
+            const updatedCartItems = state.cartItems.map(item => {
+              if (item.id === action.payload && item.quantity > 1) {
+                const newQty = item.quantity - 1;
+                return {
+                  ...item,
+                  quantity: newQty,
+                  total_item_price: newQty * item.price
+                };
+              }
+              return item;
+            });
+  
+            const newTotalPrice = updatedCartItems.reduce((acc, item) => acc + item.total_item_price, 0);
+            const newTaxes = newTotalPrice * 0.18;
+            const newGrandTotal = newTotalPrice + newTaxes + state.deliverCharges;
+  
+            return {
+              ...state,
+              cartItems: updatedCartItems,
+              totalPrice: newTotalPrice,
+              taxes: newTaxes,
+              grandTotal: newGrandTotal,
+            };
+          }
+  
+    }
+
+};
 
 export default cartReducer;

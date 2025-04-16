@@ -7,19 +7,6 @@ import { useDispatch } from 'react-redux'
 
 const ProductSection = ({product}) => {
 
-
-
-    // const getProducts = ()=>{
-    //     fetch("/api/Products")
-    //     .then(res => res.json())
-    //     .then(json => console.log(json)
-    //     )
-    // }
-
-    // useEffect(()=>{
-    //     getProducts()
-    // },[])
-
         
 
     const [Products,setAll_Products] = useState([]);
@@ -88,7 +75,7 @@ const ProductSection = ({product}) => {
                                 
                                 <div className="col-md-3 mb-4 " key={product.id} product={product}>
                                
-                                <Link onClick={handleCurrentProduct} to={`/details/${product.id}`} key={product.id}style={{textDecoration:"none"}}>
+                                <Link onClick={handleCurrentProduct} to={`/details/${product._id}`} key={product.id}style={{textDecoration:"none"}}>
                                 <div className="card" >
                                     <img src= {product.image} className="card-img-top" alt="..." />
                                     <div className="card-body">

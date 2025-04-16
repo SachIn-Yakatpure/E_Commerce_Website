@@ -161,6 +161,30 @@ app.get('/allproducts',async (req,res)=>{
 
 })
 
+// to get a single product
+
+// app.get('/product',async (req,res)=>{
+    
+
+//     let products = await Product.findOne({id:req.body.id});
+//     console.log("All Products Fetched");
+//     res.send(products); 
+
+// })
+
+
+app.get('/allproducts/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      const product = await Product.findById(id);
+      res.json(product);
+    } catch (err) {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  });
+
+  
+
 // Schema Creating for User model
 
 const Users = mongoose.model('Users',{
@@ -257,6 +281,11 @@ app.post('/login', async(req,res)=>{
 //     res.send(Products)
 // })
 
+
+
 // Creating Endpoint For adding products in cart data
 
+app.post('/addtocart',async(req,res)=>{
+    
+})
 

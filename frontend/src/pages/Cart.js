@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Navbar1 from "../components/Navbar1";
 import Footer from "../components/Footer";
-
-
+import { useDispatch } from 'react-redux';
+import { incrementCartCounter, decrementCartCounter } from '../actions/cartActions';
 
 function CartDetails() {
+
     const cartItems = useSelector(state => state.cart.cartItems);
     const cartCounter = useSelector(state => state.cart.cartCounter);
     const totalPrice = useSelector(state => state.cart.totalPrice);
@@ -14,6 +15,15 @@ function CartDetails() {
     const taxes = useSelector(state => state.cart.taxes);
     const grandTotal = useSelector(state => state.cart.grandTotal);
 
+    const dispatch = useDispatch();
+
+    const handleIncrement = (id) => {
+        dispatch(incrementCartCounter(id));
+      };
+      
+      const handleDecrement = (id) => {
+        dispatch(decrementCartCounter(id));
+      };      
 
 
     return (
@@ -25,10 +35,10 @@ function CartDetails() {
                 {cartItems.length ?
                     <div className="row mt-5">
 
-                        <h3>Product Details</h3>
+                        <h3 style={{paddingLeft:50}}>Product Details</h3>
                         <div className="col-md-8 shadow">
                             <div className="row border-bottom py-3">
-                                <div className="col-md-8"> Item</div>
+                                <div className="col-md-8" style={{paddingLeft:50}}> Item</div>
                                 <div className="col-md-2"> Cost </div>
                                 <div className="col-md-1"> Qty </div>
                                 <div className="col-md-1">Total </div>
@@ -46,10 +56,10 @@ function CartDetails() {
                                         <div className="col-md-1">
                                             <p className="text-end">{item.price}</p>
                                         </div>
-
-
+ 
+ 
                                         <div className="col-md-2">
-                                            <p className="text-end"><button>-</button> {item.quantity } <button>+</button></p>
+                                            <p className="text-end"><button className="cart-btns" onClick={()=>handleDecrement(item.id)}>-</button> {item.quantity } <button className="cart-btns" onClick={()=> handleIncrement(item.id)}>+</button></p>  
                                         </div>
 
                                         <div className="col-md-1">
@@ -98,7 +108,7 @@ function CartDetails() {
                                     <p>Total</p> <p>{grandTotal.toFixed(2)}</p>
                                 </div>
 
-                             <div className="m-2">  <Link to={'/payment'}> <button  className="btn btn-primary">Proceed to Checkout</button></Link> </div>
+                             <div className="m-2">  <Link > <button  className="btn btn-dark">Proceed to Checkout</button></Link> </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +123,7 @@ function CartDetails() {
                         <Link to='/'><button > Start Shopping</button></Link>
                     </div>}
             </div>
-            <div><Footer/></div>
+            <div className="footer2"><Footer/></div>
         </div>
 
 

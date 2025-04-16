@@ -6,30 +6,24 @@ import { addToCart } from '../actions/cartActions';
 import Swal from "sweetalert2";
 import { Link, useParams } from "react-router-dom";
 import Footer from "./Footer";
-import axios from 'axios';
-
-
 
 const ProductDetails = () =>{
-
-     
      
     const {id} = useParams();
     const [product,setAll_Products] = useState(null);
-
     
 
     useEffect(()=>{
         console.log("Fetching product with id:",id);
         
-        axios.get(`http://localhost:7000/allproducts/${id}`)
-        .then((res)=> setAll_Products(res.data))
+        fetch(`http://localhost:7000/allproducts/${id}`)
+        .then((res)=> res.json())
+        .then((data)=> setAll_Products(data))
         .catch((err)=>console.error(err));
     },[id]);
 
 
-
-    
+    // console.log(product.id);
 
     // ======
 
@@ -44,6 +38,7 @@ const ProductDetails = () =>{
           });
           
     }
+   
 
 
     return(
@@ -54,22 +49,25 @@ const ProductDetails = () =>{
         <div className="product-images" >
             <img src={product?.image} alt="Main Product Image"
                 className="main-image"/>
-            <div className="thumbnail-images">
+            {/* <div className="thumbnail-images">
                 <img src={product?.image} alt="Thumbnail 1"/>
                 <img src={product?.image} alt="Thumbnail 2"/>
-            </div>
+            </div> */}
         </div>
 
         
         <div className="product-info">
             <h1>{product?.title}</h1>
             <p className="price">&#8377;{product?.price}</p>
-            {/* <p className="sku">SKU: 12345 | Men's Headphones</p> */}
 
 
             <div className="product-discription">
                 <h2> Product Details</h2>
-                {/* <p> {product.discription}</p> */}
+                <div className="reviews1"><p>{product?.rating}</p> <p>({product?.reviews})</p>
+                </div>
+                <hr/>
+
+
             </div>
             
            
@@ -93,14 +91,7 @@ const ProductDetails = () =>{
             </div> */}
 
             <div className="actions_wrraper">
-                
-                <div className="quantity-section">
-                    <button>-</button>
-                    <input type="text" className="quantity-input" value="1"/>
-                    <button>+</button>
-                </div>
-
-                
+                            
                 <div className="actions">
                     <button className="add-to-cart" onClick={handleCart}> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
                     <Link to={'/Cart'}><button className="buy-now"><i class="fa-solid fa-angles-right"></i> Buy Now</button></Link> 
@@ -108,13 +99,16 @@ const ProductDetails = () =>{
             </div>
            
             <div className="additional-info">
-                <p><strong>Free Shipping on Orders Over &#8377;100</strong></p>
+                <p><strong>Free Shipping on Orders Over &#8377;50</strong></p>
                 <p><strong>24/7 Customer Support:</strong> +1-800-123-4567</p>
                 <p><strong>Delivery:</strong> 3 - 5 Business Days</p>
             </div>
             </div>
             </div>
+            
+            <div className="footer1">
             <Footer/>
+            </div>
 
 
             </div>

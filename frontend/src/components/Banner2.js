@@ -4,21 +4,13 @@ import React from "react";
 
 const Banner2 =()=>{
 
-    // const [data,setData] = useState(Products);
-    // const filterResult = (catItem) =>{
-    //     const result = Products.filter((curData)=>{
-    //         return curData.category === catItem;
-    //     });
-    //     setData(result);
-
-    // }
 
 
     return(
 
         <div className="Banner2">
             <img src="https://images.meesho.com/images/marketing/1701835320853_400.webp" alt="" width="400" height="429" style={{marginTop:-20}} />
-           <img src="https://images.meesho.com/images/marketing/1692191045019_300.webp" alt="" width="312" height="291" style={{marginTop:120}}/>
+           <img  src="https://images.meesho.com/images/marketing/1692191045019_300.webp" alt="" width="312" height="291" style={{marginTop:120}}/>
            <img src="https://images.meesho.com/images/marketing/1692191103963_300.webp" alt="" width="312" height="291" style={{marginTop:120}}/>
          
         </div>

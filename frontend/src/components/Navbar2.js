@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 function Navbar2(){
     return(
-        <div>
+        <div className="Navbar2">
            <nav className="navbar navbar-expand-lg navbar-light bg-white ">
   <div className="container-fluid">
    
@@ -13,37 +13,9 @@ function Navbar2(){
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
       
-      <li className="nav-item dropdown">
+      <li className="nav-item ">
             Women Ethnic
-          
-
-          <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><Link className="dropdown-item" href="#">All Women Ethnic</Link></li>
-            <li><Link className="dropdown-item" href="#">View All</Link></li>
-          </ul>
-
-          
-          <ul className="dropdown-menu" >
-            <li><Link className="dropdown-item" href="#">All </Link></li>
-            <li><Link className="dropdown-item" href="#">View All</Link></li>
-          </ul>
-
-          <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><Link className="dropdown-item" href="#">All Women Ethnic</Link></li>
-            <li><Link className="dropdown-item" href="#">View All</Link></li>
-          </ul>
-
-          <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><Link className="dropdown-item" href="#">All Women Ethnic</Link></li>
-            <li><Link className="dropdown-item" href="#">View All</Link></li>
-          </ul>
-
-          <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><Link className="dropdown-item" href="#">All Women Ethnic</Link></li>
-            <li><Link className="dropdown-item" href="#">View All</Link></li>
-          </ul>
-
-
+        
         </li>
 
         <li className="nav-item">
@@ -59,16 +31,16 @@ function Navbar2(){
         </li>
       
         <li className="nav-item">
-          <Link className="nav-link" aria-current="page" to="/Kitchen">Home & Kitchen</Link>
+         Home & Kitchen
 
         </li>
       
         <li className="nav-item">
-          <Link className="nav-link" aria-current="page" to="">Beauty & Health</Link>
+          Beauty & Health
         </li>
       
         <li className="nav-item">
-          <Link className="nav-link" aria-current="page" to="/Jewellery">Jewellery & Accessories</Link>
+          Jewellery & Accessories
         </li>
       
         <li className="nav-item">
@@ -76,7 +48,7 @@ function Navbar2(){
         </li>
       
         <li className="nav-item">
-          <Link className="nav-link" aria-current="page" to="/Electronics">Electronics</Link>
+          Electronics
         </li>
       
         
@@ -85,7 +57,7 @@ function Navbar2(){
   </div>
 </nav>
 <Outlet/>
-<div className="str_line_1"></div>
+<div className="hrr"><hr/></div>
         </div>
     )
 }

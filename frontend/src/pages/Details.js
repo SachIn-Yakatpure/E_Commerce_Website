@@ -13,7 +13,7 @@ let Details = () =>{
     return(
         <div>
 
-        <div className="Details">
+        <div className="container-fluid">
             <Navbar1/>
             <Navbar2/>
 
@@ -23,8 +23,6 @@ let Details = () =>{
 
             <ProductDetails product = {product}/>
        </div>
-
-
 
        </div>
 

@@ -9,7 +9,7 @@ function Signup_nav(){
             <div className="Signup_nav">
             <nav className="navbar navbar-expand-lg navbar-light bg-white border-black">
             <div className="container-fluid">
-            <Link className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
             <img src="https://www.meesho.com/assets/svgicons/meeshoLogo.svg" alt="" width="156" height="36"/>
             </Link>
 

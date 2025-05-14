@@ -13,6 +13,7 @@ const AddProduct = () =>{
         category: "Men",
         rating: "",
         reviews: "",
+        quantity:"",
 
 
     })
@@ -26,10 +27,7 @@ const AddProduct = () =>{
         setProductDetails({...productDetails, [e.target.name]:e.target.value})
     }
 
-    // const changeHandler = (e) =>{
-    //     setProductDetails({...productDetails,[e.target.name]:e.target.value})
-    // }
-
+   
     const Add_Product = async () =>{
         console.log(productDetails);
         let responseData;
@@ -113,11 +111,20 @@ const AddProduct = () =>{
 
             </div>
 
+            <div className="addproduct-price">
+                <div className="addproduct-itemfield">
+                    <p>Quantity</p>
+                    <input value={productDetails.quantity} onChange={changeInput} type="text" name="quantity" placeholder="Type here" />
+
+                </div>
+            </div> 
+
             <div className="addproduct-itemfield" >
                 <label htmlFor="file-input">
                     <img src= {image?URL.createObjectURL(image): "https://www.lifewire.com/thmb/TRGYpWa4KzxUt1Fkgr3FqjOd6VQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg" }height={100}  className="addproduct-thumbnail-image" />
 
                 </label>
+
 
                 <input onChange={imageHandler}  type="file" name="image" id="file-input" hidden/>
             </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-// import meeshologo from "./Assets/meesho.svg"
 
 
 const Navbar = () =>{

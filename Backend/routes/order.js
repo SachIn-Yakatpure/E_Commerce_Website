@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
+import Product from '../models/Product.js';
+import Order from '../models/Order.js';
+import isAuth from '../middleware/authMiddleware.js';
 const router = express.Router();
-const Product = require('../models/Product');
-const Order = require('../models/Order'); 
-const isAuth = require('../upload/middleware/authMiddleware');
 
 router.post('/purchase', isAuth, async (req, res) => {
   const { productId } = req.body;
@@ -31,4 +31,20 @@ router.post('/purchase', isAuth, async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get('/myorders', isAuth, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id,  
+      products: { $exists: true, $ne: []}, 
+    })
+      .populate('products.productId', 'title price image')  
+      .sort({ createdAt: -1 });
+
+    console.log(JSON.stringify(orders, null, 2));
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch orders' });
+  }
+});
+
+
+export default router;

@@ -79,6 +79,15 @@ let Beauty = () => {
 
         if (responseData.success) {
             localStorage.setItem('auth-token', responseData.token);  // authentication token 
+        // Save userInfo to localStorage (example):
+        localStorage.setItem('userInfo', JSON.stringify({
+            token: responseData.token,
+            username: formData.username,
+            email: formData.email
+        }));
+
+        dispatch(loginUser({ email: formData.email, password: formData.password }));
+            
             window.location.replace("/");
         }
         else {
@@ -120,7 +129,7 @@ let Beauty = () => {
                             </div>
 
                             {action === "Login" ? <div></div> : <div className="inputs_">
-                                <i className="fa-solid fa-lock"></i> <input name="confirmPassword" value={formData.password} onChange={changeHandler} type="password" placeholder="Confirm Password" />
+                                <i className="fa-solid fa-lock"></i> <input name="confirmPassword" value={formData.confirmPassword} onChange={changeHandler} type="password" placeholder="Confirm Password" />
                             </div>}
 
 

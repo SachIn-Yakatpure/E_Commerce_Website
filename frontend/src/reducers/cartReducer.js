@@ -36,12 +36,16 @@ const cartReducer = (state = initialState, action) => {
         // If item already exists, update its quantity
         const updatedCartItems = state.cartItems.map((item, index) => {
           if (index === existIndex) {
-            const newQty = item.qty + 1;
+            let newQty = item.qty + 1;
+            if (newQty > item.countInStock) {
+              newQty = item.countInStock;
+            }
             return {
               ...item,
               qty: newQty,
               total_item_price: newQty * item.price,
             };
+
           }
           return item;
         });
@@ -59,7 +63,7 @@ const cartReducer = (state = initialState, action) => {
             ...state.cartItems,
             {
               ...action.payload,
-              id: productId, 
+              id: productId,
               qty: 1,
               total_item_price: action.payload.price,
             },
@@ -85,10 +89,17 @@ const cartReducer = (state = initialState, action) => {
     case 'INCREMENT_CART_COUNTER': {
       const updatedCartItems = state.cartItems.map(item => {
         if (item.id === action.payload) {
-          const newQty = item.qty + 1; 
+          const newQty = item.qty + 1;
+
+          // 🔒 Prevent incrementing beyond available stock
+          if (newQty > item.countInStock) {
+            console.warn(`❌ Cannot add more. Only ${item.countInStock} in stock for ${item.title}`);
+            return item; // return unchanged item
+          }
+
           return {
             ...item,
-            qty: newQty, 
+            qty: newQty,
             total_item_price: newQty * item.price,
           };
         }
@@ -108,6 +119,7 @@ const cartReducer = (state = initialState, action) => {
       localStorage.setItem('cartState', JSON.stringify(updatedState));
       return updatedState;
     }
+
 
     case 'DECREMENT_CART_COUNTER': {
       const updatedCartItems = state.cartItems.map(item => {
@@ -177,7 +189,7 @@ const cartReducer = (state = initialState, action) => {
 
     case 'CLEAR_CART': {
       // Clear localStorage when cart is cleared
-      localStorage.removeItem('cartState');
+      localStorage.removeItem('cartItems');
       return {
         ...state,
         cartItems: [],

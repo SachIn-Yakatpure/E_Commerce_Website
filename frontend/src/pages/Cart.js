@@ -7,6 +7,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { incrementCartCounter, decrementCartCounter } from "../actions/cartActions";
 import { saveUserCart } from "../actions/cartActions";
 import { removeFromCart } from "../actions/cartActions";
+import { jwtDecode } from "jwt-decode";
+
 
 function CartDetails() {
     const dispatch = useDispatch();
@@ -39,6 +41,7 @@ function CartDetails() {
         dispatch(incrementCartCounter(id));
     };
 
+
     const handleDecrement = (id) => {
         dispatch(decrementCartCounter(id));
     };
@@ -47,18 +50,37 @@ function CartDetails() {
     const makePayment = async () => {
         const stripe = await loadStripe("pk_test_51RI9HhCH7rbrdLiTUHCfQv9xy3UM2E6JR5Y76pfXG9AiwjF77VIw5QdauuYRhqHejVRze2DqYKGUAwhdOjSsRZqA00amF3m3fD");
 
+        console.log("🔐 userInfo in makePayment:", userInfo);
+
+        if (!userInfo || !userInfo.token) {
+            alert("You must be logged in to proceed to checkout.");
+            return;
+        }
+
+        // ✅ Decode the token to get userId
+        const decoded = jwtDecode(userInfo.token);
+        const userId = decoded.user.id;
+
         const body = {
-            products: cartItems.map(product => ({
+            cartItems: cartItems.map(product => ({
                 productId: product.id || product._id,
                 title: product.title,
                 price: product.price,
                 image: product.image,
                 quantity: product.qty
-            }))
+            })),
+            userId,
+            email: userInfo.email,
+            grandTotal,
+            taxes,
+            deliveryCharges
         };
 
+
+        console.log("🛒 Sending products to backend:", body);
         const headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`
         };
 
         console.log("🛒 Sending products to backend:", body);
@@ -68,6 +90,7 @@ function CartDetails() {
             method: "POST",
             headers,
             body: JSON.stringify(body)
+
         });
 
         const session = await response.json();
@@ -100,6 +123,8 @@ function CartDetails() {
 
                             <div className="container">
                                 {cartItems.map(item => (
+                                    console.log("🧾 Cart item:", item),
+
                                     <div className="row borderp-2 py-4" key={item.id}>
                                         <div className="col-md-7 d-flex">
                                             <img src={item.image} alt={item.title} style={{ width: "40px", height: "40px" }} />
@@ -110,13 +135,35 @@ function CartDetails() {
                                             <p className="text-end">{item.price ? item.price.toFixed(2) : '0.00'}</p>
                                         </div>
 
-                                        <div className="col-md-2">
-                                            <p className="text-end">
+                                        <div className="col-md-2 text-end">
+                                            <div className="quantity-controls">
                                                 <button className="cart-btns" onClick={() => handleDecrement(item.id)}>-</button>
-                                                {item.qty}
-                                                <button className="cart-btns" onClick={() => handleIncrement(item.id)}>+</button>
-                                            </p>
+                                                <span className="px-2">{item.qty}</span>
+                                                <button
+  className="cart-btns"
+  onClick={() => {
+    // Use currentQuantity or updatedQuantity as backend stock
+    const availableStock = item.currentQuantity ?? item.updatedQuantity ?? 0;
+    if (item.qty >= availableStock) {
+      alert(`Only ${availableStock} items in stock for "${item.title}"`);
+      return;
+    }
+    handleIncrement(item.id);
+  }}
+>
+  +
+</button>
+
+
+
+                                                {item.qty >= item.countInStock && (
+                                                    <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '5px' }}>
+                                                        Only {item.countInStock} in stock
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
+
 
                                         <div className="col-md-1">
                                             <p className="text-end">{item.total_item_price ? item.total_item_price.toFixed(2) : '0.00'}</p>

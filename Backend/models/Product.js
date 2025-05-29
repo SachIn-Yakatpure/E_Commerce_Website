@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
@@ -18,17 +17,28 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  totalQuantity: { // Lifetime total (never decreases)
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  currentQuantity: { // Actual stock available
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  updatedQuantity: { // Last added amount (for reference)
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  
   rating: {
     type: Number,
-    required: true,
+    default: 0,
   },
-  reviews: {
+  totalRatings: {
     type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
     default: 0,
   },
   date: {
@@ -38,5 +48,4 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model('Product', productSchema);
-
 export default Product;

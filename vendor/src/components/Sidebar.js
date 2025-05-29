@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-// import shoppingcart from "../../assets/shopping-cart.png" 
 
 const Sidebar = () =>{
 

@@ -4,12 +4,25 @@ import { useDispatch } from "react-redux";
 import { clearCart } from "../actions/cartActions";
 import { Link } from "react-router-dom";
 
-export default function Success() {
+export default function Success({ setShouldLoadCart }) {
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    dispatch(clearCart());  
-    }, [dispatch]);
+    dispatch(clearCart());
+
+      if (setShouldLoadCart) {
+    setShouldLoadCart(false);
+  }
+    
+    setTimeout(() => {
+      const cart = JSON.parse(localStorage.getItem('cartItems'));
+      console.log("🛒 LocalStorage cartItems after clear:", cart);
+    }, 500);
+  }, [dispatch, setShouldLoadCart]);
+
+  console.log("Cart should now be cleared");
+
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "80vh", textAlign: "center", padding: "2rem" }}>

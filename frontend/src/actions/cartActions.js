@@ -2,54 +2,62 @@ import axios from "axios";
 
 // ==== Action Creators ====
 
+let saveUserCartTimeout;
+
 export const saveUserCart = () => async (dispatch, getState) => {
-  const {
-    cart: { cartItems },
-    userLogin: { userInfo }
-  } = getState();
+  clearTimeout(saveUserCartTimeout);
 
-  console.log("🛒 saveUserCart triggered", { userInfo, cartItems });
+  saveUserCartTimeout = setTimeout(async () => {
+    const {
+      cart: { cartItems },
+      userLogin: { userInfo }
+    } = getState();
 
-  if (!userInfo || userInfo.success === false) {
-    console.warn("🚫 Aborting saveUserCart: user not logged in or login failed.");
-    return;
-  }
+    console.log("🛒 saveUserCart triggered", { userInfo, cartItems });
 
-  const invalidItems = cartItems.filter(item => !(item.productId || item.id) || typeof item.qty !== 'number');
-  if (invalidItems.length > 0) {
-    console.warn('⚠️ Found invalid cart items, skipping:', invalidItems);
-  }
+    if (!userInfo || userInfo.success === false) {
+      console.warn("🚫 Aborting saveUserCart: user not logged in or login failed.");
+      return;
+    }
 
-  const transformedCart = cartItems
-    .filter(item => (item.productId || item.id) && typeof item.qty === 'number')
-    .map(item => ({
-      ...item,
-      productId: item.productId || item._id || item.id, 
-      qty: Math.max(1, Number(item.qty)), // ensuring qty is a number >= 1
-    }));
+    const invalidItems = cartItems.filter(item => !(item.productId || item.id) || typeof item.qty !== 'number');
+    if (invalidItems.length > 0) {
+      console.warn('⚠️ Found invalid cart items, skipping:', invalidItems);
+    }
+
+    const transformedCart = cartItems
+      .filter(item => (item.productId || item.id) && typeof item.qty === 'number')
+      .map(item => ({
+        ...item,
+        productId: item.productId || item._id || item.id,
+        qty: Math.max(1, Number(item.qty)), // ensuring qty is a number >= 1
+      }));
 
     console.log("📤 Sending to backend:", transformedCart);
 
-  // Allow saving empty cart
-  if (transformedCart.length === 0) {
-    console.warn("⚠️ Cart is empty. Will save empty cart to backend.");
-  }
+    // Allow saving empty cart
+    if (transformedCart.length === 0) {
+      console.warn("⚠️ Cart is empty. Will save empty cart to backend.");
+    }
 
-  
-  try {
-    await axios.post(
-      "http://localhost:7000/api/cart/save",
-      { cartItems: transformedCart },
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    try {
+      const response = await axios.post(
+        "http://localhost:7000/api/cart/save",
+        { cartItems: transformedCart },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
 
-    console.log("✅ Cart saved:", transformedCart);
-  } catch (error) {
-    console.error("❌ Error saving cart to backend:", error);
-  }
+      console.log("✅ Cart saved:", transformedCart);
+    } catch (error) {
+      const errorMsg = error?.response?.data?.message || "Unknown error";
+      console.error("❌ Error saving cart to backend:", errorMsg);
+      alert(`🛑 Cart update failed: ${errorMsg}`);
+    }
+  }, 300); // debounce delay in milliseconds
 };
+
 
 // Load the user's cart from the backend
 
@@ -63,23 +71,19 @@ export const loadUserCart = (userInfo) => async (dispatch, getState) => {
 
     console.log("🛒 Loaded cart from DB:", data.cartItems);
 
-    const cartItemsWithId = (data.cartItems || []).map(item => ({
+    const cartItemsWithCountInStock = (data.cartItems || []).map(item => ({
       ...item,
+      countInStock: item.currentQuantity,  // <-- add this line to map quantity
       id: item.id || item._id,
     }));
 
-    dispatch({ type: "LOAD_CART_FROM_DB", payload: cartItemsWithId });
-
-    // ✅ Log Redux state after dispatch
-    setTimeout(() => {
-      const reduxCart = getState().cart.cartItems;
-      console.log("✅ Redux cartItems after LOAD_CART_FROM_DB:", reduxCart);
-    }, 300);
+    dispatch({ type: "LOAD_CART_FROM_DB", payload: cartItemsWithCountInStock });
 
   } catch (error) {
     console.error("❌ Failed to load user cart:", error);
   }
 };
+
 
 
 // ==== Cart Manipulation Actions ====
@@ -96,7 +100,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
   const { userLogin: { userInfo } } = getState();
 
   if (userInfo) {
-    dispatch(saveUserCart(cart)); // Save updated cart to backend
+    dispatch(saveUserCart()); // Save updated cart to backend
   }
 };
 
@@ -111,18 +115,10 @@ export const decrementCartCounter = (id) => async (dispatch) => {
   dispatch(saveUserCart());
 };
 
-export const clearCart = () => async (dispatch, getState) => {
-  const { userLogin: { userInfo } } = getState();
-
-  if (userInfo) {
-    try {
-      await axios.post("/api/cart/clear", {}, {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      });
-    } catch (error) {
-      console.error("Error clearing cart in the backend:", error);
-    }
-  }
-
+export const clearCart = () => async (dispatch) => {
+  // ✅ Just clear Redux and localStorage — backend already cleared via Stripe webhook
   dispatch({ type: 'CLEAR_CART' });
+  localStorage.removeItem('cartItems');
+  console.log('🧹 Cleared localStorage cartItems and Redux cart');
 };
+

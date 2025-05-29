@@ -1,7 +1,8 @@
 import express from "express";
 import isAuth from '../middleware/authMiddleware.js';
 import Users from '../models/users.js';
-import Cart from "../models/Cart.js"; 
+import Cart from "../models/Cart.js";
+import Product from '../models/Product.js';
 import mongoose from 'mongoose';
 
 const router = express.Router();
@@ -20,7 +21,21 @@ router.post("/save", isAuth, async (req, res) => {
       return res.status(400).json({ message: "Invalid cart data, expected array" });
     }
 
-    //  Basic sanitization
+    // 🔍 Validate stock before saving
+    for (const item of cartItems) {
+      const product = await Product.findById(item.id);
+      if (!product) {
+        return res.status(404).json({ message: `Product not found: ${item.title}` });
+      }
+
+      if (item.qty > product.quantity) {
+        return res.status(400).json({
+          message: `❌ Not enough stock for "${product.title}". Requested: ${item.qty}, Available: ${product.quantity}`
+        });
+      }
+    }
+
+    // ✅ If all quantities are valid, continue saving
     const sanitizedItems = cartItems.map(item => {
       const qty = item.qty < 1 ? 1 : item.qty;
       return {
@@ -39,7 +54,7 @@ router.post("/save", isAuth, async (req, res) => {
       totalPrice: sanitizedItems.reduce((sum, item) => sum + item.total_item_price, 0),
       deliverCharges: 50,
       taxes: 0,
-      grandTotal: 0 
+      grandTotal: 0
     };
     cartMeta.grandTotal = cartMeta.totalPrice + cartMeta.deliverCharges + cartMeta.taxes;
 
@@ -48,18 +63,15 @@ router.post("/save", isAuth, async (req, res) => {
       { user: userId, ...cartMeta },
       { upsert: true, new: true, runValidators: true }
     );
-    console.log("🧾 Final saved cart:", updatedCart);
-
 
     console.log("✅ Cart saved for user:", userId);
     res.status(200).json({ message: "Cart saved successfully", cart: updatedCart });
+
   } catch (err) {
     console.error("❌ Error saving cart:", err.message);
     res.status(500).json({ error: "Failed to save cart", details: err.message });
   }
 });
-
-
 
 // Get user's cart 
 router.get("/", isAuth, async (req, res) => {

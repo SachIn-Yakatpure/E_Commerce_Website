@@ -2,11 +2,12 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { clearCart } from "../actions/cartActions";  
-import { logout } from "../actions/userActions";  
+import { clearCart } from "../actions/cartActions";
+import { logout } from "../actions/userActions";
 
-function Navbar1() {
-    
+function Navbar1({ searchQuery, setSearchQuery }) {
+
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -14,8 +15,9 @@ function Navbar1() {
     const userInfo = useSelector((state) => state.userLogin.userInfo); // Get user info from Redux
 
     console.log("🧠 Redux userInfo in Navbar:", userInfo);
-    
+
     const logoutHandler = () => {
+        dispatch(clearCart());
         dispatch(logout()); // Use Redux logout to clear everything
         console.log("🛑 Logout dispatched");
         navigate("/"); // Redirect to home after logout
@@ -29,14 +31,30 @@ function Navbar1() {
                         <img src="https://www.meesho.com/assets/svgicons/meeshoLogo.svg" alt="" width="156" height="36" />
                     </Link>
 
-                    <form className="d-flex">
+                    <form
+                        className="d-flex"
+                        onSubmit={(e) => {
+                            e.preventDefault(); //  Prevent reload
+                        }}
+                    >
                         <input
                             className="form-control me-2"
                             type="search"
                             placeholder="Try Saree, Kurti or Search by Product Code"
                             aria-label="Search"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    if (window.filterProductsBySearch && window.scrollToProducts) {
+                                        window.filterProductsBySearch(e.target.value);
+                                        window.scrollToProducts();
+                                    }
+                                }
+                            }}
                         />
+
                     </form>
+
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -68,12 +86,16 @@ function Navbar1() {
                                         {userInfo ? `Hello, ${userInfo.username}` : "Hello User"}
                                     </li>
                                     <li className="navv-item">To access your <br /> Meesho account</li>
+                                    <li className="navv-item"> <Link to="/myorders">
+                                        <button> <i className="fa-solid fa-bag-shopping"></i>  My Orders</button></Link>
+                                    </li>
+
                                     <li className="navv-item">
                                         {/* Show logout button if user is logged in */}
                                         {userInfo ? (
-                                            <button onClick={logoutHandler}>Logout</button>
+                                            <button onClick={logoutHandler}> <i className="fa-solid fa-right-from-bracket"></i> Logout</button>
                                         ) : (
-                                            <Link className="dropdown-item" to="/Beauty"><button>Login</button></Link>
+                                            <Link className="dropdown-item" to="/Beauty"><button> Login</button></Link>
                                         )}
                                     </li>
                                 </ul>

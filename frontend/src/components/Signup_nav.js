@@ -25,7 +25,7 @@ function Signup_nav(){
           <ul className="navbar-nav me-2 my-2 my-lg-0 navbar-nav-scroll" >
           
           <li className="nav-item">
-            <Link className="nav-link" aria-current="page" href="#">Download App <i class="fa-duotone fa-solid fa-pipe"></i></Link>
+            <Link className="nav-link" aria-current="page" href="#">Download App <i className="fa-duotone fa-solid fa-pipe"></i></Link>
           </li>
 
           <li className="nav-item">

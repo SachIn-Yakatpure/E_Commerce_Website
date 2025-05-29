@@ -27,15 +27,15 @@ export const loginUser = (formData) => async (dispatch) => {
 export const logout = () => async (dispatch, getState) => {
   const { cart: { cartItems }, userLogin: { userInfo } } = getState();
 
-  //  Save cart first (before clearing anything)
-  if (userInfo?.token) {
+  // ✅ Save cart before clearing anything
+  if (userInfo?.token && cartItems.length > 0) {
     await dispatch(saveUserCart());
   }
 
-  // 🔥 Then clear Redux and localStorage
+  // ✅ Now clear Redux and localStorage
   dispatch({ type: 'USER_LOGOUT' });
   dispatch({ type: 'CLEAR_CART' });
 
   localStorage.removeItem('userInfo');
-  localStorage.removeItem('cartState');
+  localStorage.removeItem('cartItems');
 };

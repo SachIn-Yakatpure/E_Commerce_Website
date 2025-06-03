@@ -100,7 +100,7 @@ const [data, setData] = useState([]);
           <h4 className="Price"> &#8377; {product.price}</h4>
           <p className="card-text">Free Delivery</p>
           <div className="ratings">
-            <h4>{product.rating}</h4>
+            <h4>{product.rating.toFixed(1)}</h4>
             <img src="https://www.meesho.com/assets/svgicons/star.svg" alt=".." style={{ height: 10, width: 10, marginTop: 6, marginLeft: 4 }} />
             {/* <h5 className="reviews">({product.reviews})</h5> */}
           </div>

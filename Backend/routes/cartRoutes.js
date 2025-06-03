@@ -73,7 +73,7 @@ router.post("/save", isAuth, async (req, res) => {
   }
 });
 
-// Get user's cart 
+// Get user's cart
 router.get("/", isAuth, async (req, res) => {
   const userId = req.user._id;
 
@@ -84,12 +84,31 @@ router.get("/", isAuth, async (req, res) => {
       return res.status(200).json({ cartItems: [] }); // empty cart fallback
     }
 
-    res.status(200).json({ cartItems: cart.cartItems });
+    const enrichedCartItems = await Promise.all(
+      cart.cartItems.map(async (item) => {
+        try {
+          const product = await Product.findById(item.id);
+          return {
+            ...item._doc,
+            currentQuantity: product ? product.currentQuantity : 0
+          };
+        } catch (err) {
+          console.warn(`⚠️ Product not found for ID: ${item.id}`);
+          return {
+            ...item._doc,
+            currentQuantity: 0
+          };
+        }
+      })
+    );
+
+    res.status(200).json({ cartItems: enrichedCartItems });
   } catch (err) {
     console.error("❌ Error fetching cart from Cart model:", err);
     res.status(500).json({ error: "Failed to fetch cart" });
   }
 });
+
 
 
 export default router;

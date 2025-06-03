@@ -140,19 +140,19 @@ function CartDetails() {
                                                 <button className="cart-btns" onClick={() => handleDecrement(item.id)}>-</button>
                                                 <span className="px-2">{item.qty}</span>
                                                 <button
-  className="cart-btns"
-  onClick={() => {
-    // Use currentQuantity or updatedQuantity as backend stock
-    const availableStock = item.currentQuantity ?? item.updatedQuantity ?? 0;
-    if (item.qty >= availableStock) {
-      alert(`Only ${availableStock} items in stock for "${item.title}"`);
-      return;
-    }
-    handleIncrement(item.id);
-  }}
->
-  +
-</button>
+                                                    className="cart-btns"
+                                                    onClick={() => {
+                                                        // Use currentQuantity or updatedQuantity as backend stock
+                                                        const availableStock = item.currentQuantity ?? item.updatedQuantity ?? 0;
+                                                        if (item.qty >= availableStock) {
+                                                            alert(`Only ${availableStock} items in stock for "${item.title}"`);
+                                                            return;
+                                                        }
+                                                        handleIncrement(item.id);
+                                                    }}
+                                                >
+                                                    +
+                                                </button>
 
 
 

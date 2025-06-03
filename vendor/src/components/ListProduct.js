@@ -123,7 +123,7 @@ const ListProduct = () => {
                         />
                         <button onClick={() => updateProductQuantity(product._id)}>Update</button>
 
-                        <img onClick={() => { remove_product(product._id) }} className="listproduct-remove-icon" src="https://img.freepik.com/premium-vector/reject-vector-icon-illustration-design_535345-7353.jpg?w=900" height={50} alt="" />
+                        <img onClick={() => { remove_product(product.id) }} className="listproduct-remove-icon" src="https://img.freepik.com/premium-vector/reject-vector-icon-illustration-design_535345-7353.jpg?w=900" height={50} alt="" />
 
                     </div>
 
